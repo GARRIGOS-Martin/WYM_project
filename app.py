@@ -11,6 +11,10 @@ def home():
 def contact():
     return render_template('/contact.html')   # on renvoie une chaîne de caractères
 
+@app.route("/about")  # association d’une route (URL) avec la fonction suivante
+def contact():
+    return render_template('/about.html')   # on renvoie une chaîne de caractères
+
 @app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante
 def thanks():
     return render_template('Thanks.html')   # on renvoie une chaîne de caractères

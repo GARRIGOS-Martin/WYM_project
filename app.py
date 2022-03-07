@@ -7,6 +7,10 @@ app = Flask(__name__) # instanciation application
 def home():
     return render_template('/home.html')   # on renvoie une chaîne de caractères
 
+@app.route("/home")  # association d’une route (URL) avec la fonction suivante
+def return_home():
+    return render_template('/home.html')   # on renvoie une chaîne de caractères
+
 @app.route("/contact")  # association d’une route (URL) avec la fonction suivante
 def contact():
     return render_template('/contact.html')   # on renvoie une chaîne de caractères
@@ -19,3 +23,5 @@ def about():
 def thanks():
     return render_template('Thanks.html')   # on renvoie une chaîne de caractères
 app.run(debug = True) # démarrage de l’appli
+
+

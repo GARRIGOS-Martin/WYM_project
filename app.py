@@ -8,10 +8,15 @@ def home():
 
 @app.route("/contact")  # association d’une route (URL) avec la fonction suivante
 def contact():
-    return render_template('contact.html')   # on renvoie une chaîne de caractères
+    return render_template('/contact.html')   # on renvoie une chaîne de caractères
 
 @app.route("/nom")
-def nom():
-    return render_template('/nom.html') 
+def nom(text='pas de résumé'):
+    sentiment = "négatif"
+    if sentiment == "positif":
+        text="ce résumé est positif"
+    else :
+        text= "ce résumé est négatif"
+    return render_template('/nom.html',text=text) 
 
-app.run() # démarrage de l’appli
+app.run(debug=True) # démarrage de l’appli

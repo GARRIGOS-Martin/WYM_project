@@ -10,4 +10,8 @@ def home():
 def contact():
     return render_template('contact.html')   # on renvoie une chaîne de caractères
 
+@app.route("/nom")
+def nom():
+    return render_template('/nom.html') 
+
 app.run() # démarrage de l’appli

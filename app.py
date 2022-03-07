@@ -12,7 +12,7 @@ def contact():
     return render_template('/contact.html')   # on renvoie une chaîne de caractères
 
 @app.route("/about")  # association d’une route (URL) avec la fonction suivante
-def contact():
+def about():
     return render_template('/about.html')   # on renvoie une chaîne de caractères
 
 @app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante

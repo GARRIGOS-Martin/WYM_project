@@ -10,8 +10,7 @@ def home():
 def contact():
     return render_template('contact.html')   # on renvoie une chaîne de caractères
 
-<<<<<<< HEAD
+@app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante
+def thanks():
+    return render_template('Thanks.html')   # on renvoie une chaîne de caractères
 app.run(debug = True) # démarrage de l’appli
-=======
-app.run() # démarrage de l’appli
->>>>>>> b9523b3381b3957e6b579f771204d680dc5097c5

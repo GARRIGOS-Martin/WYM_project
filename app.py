@@ -29,8 +29,8 @@ def thanks():
 def summary():
     text = request.form.get("input_text")
     texte_resume = resume_texte_ibm(text)
-    print(text, "test_du_print")
-    return render_template('summary.html', texte_initial= text,texte_resume =texte_resume )   # on renvoie une chaîne de caractères
+    
+    return render_template('summary.html', texte_initial= text, texte_resume = texte_resume)   # on renvoie une chaîne de caractères
 
 
 def resume_texte_ibm(monText):

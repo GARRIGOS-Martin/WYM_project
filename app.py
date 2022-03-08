@@ -22,6 +22,6 @@ def about():
 @app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante
 def thanks():
     return render_template('Thanks.html')   # on renvoie une chaîne de caractères
-app.run(debug = True) # démarrage de l’appli
+app.run(debug = True, host='0.0.0.0', port=8000) # démarrage de l’appli
 
 

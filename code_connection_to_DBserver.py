@@ -1,3 +1,7 @@
+#sudo docker run --name wymtest_db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=wym_admin -p 5431:5431 -d postgres 
+#poetry install psycopg2
+#poetry add psycopg2-binary
+#pip install psycopg2
 
 
 #the following code can be used to create a connection to the database server:
@@ -31,8 +35,9 @@ conn.autocommit=True
 curr = conn.cursor()
   
 # EXECUTE THE SQL QUERY
-curr.execute(" CREATE TABLE IF NOT EXISTS IDENTIFICATION (msg_id INT PRIMARY KEY NOT NULL, name VARCHAR(100), message VARCHAR(255) );")
-curr.execute(" INSERT INTO IDENTIFICATION (msg_id, name,message) VALUES (1,'AMINA','Bonjour');")
+#curr.execute(" CREATE TABLE IF NOT EXISTS IDENTIFICATION (msg_id INT PRIMARY KEY NOT NULL, name VARCHAR(100), message VARCHAR(255);")
+curr.execute("ALTER TABLE IDENTIFICATION  ADD objet VARCHAR(255)")
+curr.execute(" INSERT INTO IDENTIFICATION (msg_id, name,message,objet) VALUES (1,'AMINA','Bonjour', 'fff');")
 #curr.execute("SELECT * FROM IDENTIFICATION ;")
 
 # FETCH ALL THE ROWS FROM THE CURSOR

@@ -1,8 +1,21 @@
-from flask import Flask        # import de l’objet Flask
+from flask import Flask        
 from flask import render_template, request
-#import requests
+from DBserver import *
+import requests
+import json
+
+# Connexion à la Base de donnée et création de la table
+conn = get_connection()
+print (conn)
+curr = conn.cursor()
+test_connection(conn)   # Teste la connection
+create_table(curr)      # Creation de la table
+
+# Recupere l'id max
 
 
+
+# Lance l'application
 app = Flask(__name__) # instanciation application
 
 @app.route("/")  # association d’une route (URL) avec la fonction suivante
@@ -13,23 +26,34 @@ def home():
 def contact():
     return render_template('/contact.html')   # on renvoie une chaîne de caractères
 
-@app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante
+@app.route("/about")  # association d’une route (URL) avec la fonction suivante
+def about():
+    return render_template('/about.html')   # on renvoie une chaîne de caractères
+
+@app.route("/Thanks", methods=["GET", "POST"])  # association d’une route (URL) avec la fonction suivante
 def thanks():
-    return render_template('Thanks.html')   # on renvoie une chaîne de caractères
+    prenom = "'" + request.form.get("Prenom") + "'"
+    nom = "'" + request.form.get("Nom") + "'"
+    mail = "'" + request.form.get("Mail") + "'"
+    message = "'" + request.form.get("Message") + "'"
+    
+    print(prenom, nom, message, mail)
+    insert_data(curr, prenom, nom, mail, message)
+
+    return render_template('Thanks.html') 
 
 @app.route("/summary" , methods=["GET","POST"])  # association d’une route (URL) avec la fonction suivante
 def summary():
     text = request.form.get("input_text")
-    texte_resume = resume_texte_ibm(text)
-    
-def get_data():
-   if request.method == 'POST':
-      result = request.form
-      return render_template("result.html",result = result)
+    result = resume_texte_ibm(text) 
+    result_json = json.loads(result)   # Transforme en dictionnaire
+    result_text = result_json['summary_text'][0]
+    return render_template('summary.html',
+                            texte_initial= text,
+                            texte_resume = result_text)   # on renvoie une chaîne de caractères
 
 
 def resume_texte_ibm(monText):
-
     # Pour interagir avec la page html  
     url = "http://localhost:5000/model/predict"
 
@@ -41,7 +65,9 @@ def resume_texte_ibm(monText):
     return r.text
 
 
-
 app.run(debug = True, host='0.0.0.0', port=8888) # démarrage de l’appli
+
+# Deconnection de la Base de donnée
+close_connection()
 
 

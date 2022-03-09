@@ -8,8 +8,8 @@ COPY ./requirements.txt /tmp/requirements.txt
 RUN pip install -U pip
 RUN pip install -r /tmp/requirements.txt
 
-COPY ./app.py /bin/app.py
+COPY . .
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "/bin/app.py" ]
+CMD [ "app.py" ]

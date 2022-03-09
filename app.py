@@ -5,11 +5,13 @@ import requests
 
 # Connexion à la Base de donnée et création de la table
 conn = get_connection()
+print (conn)
 curr = conn.cursor()
 test_connection(conn)   # Teste la connection
 create_table(curr)      # Creation de la table
 
 # Recupere l'id max
+
 
 
 # Lance l'application
@@ -37,8 +39,9 @@ def thanks():
     nom = "'" + request.form.get("Nom") + "'"
     mail = "'" + request.form.get("Mail") + "'"
     message = "'" + request.form.get("Message") + "'"
+    
     print(prenom, nom, message, mail)
-    insert_data(curr, 1, prenom, nom, mail, message)
+    insert_data(curr,  prenom, nom, mail, message)
     
     return render_template('Thanks.html') 
 

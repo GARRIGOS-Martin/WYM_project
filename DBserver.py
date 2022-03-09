@@ -7,7 +7,7 @@
 #the following code can be used to create a connection to the database server:
 import psycopg2
 
-
+mid=0
 def get_connection():
     try:
         conn = psycopg2.connect(
@@ -34,16 +34,25 @@ def create_table(curseur):
                 nom VARCHAR(100), 
                 mail VARCHAR(255),
                 message VARCHAR(255));""")
+    global mid 
+    curseur.execute ('SELECT MAX (id) FROM IDENTIFICATION ;')
+    data = curseur.fetchall()
+    print(len(data))
+    mid = (data[0][0])+1
     print ("table créée")
 
-def insert_data(curseur, id, var1, var2, var3, var4 ):
-    print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({id}, {var1},{var2},{var3}, {var4});")
-    curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({id}, {var1},{var2},{var3}, {var4});")
-    """
-    data = curseur.fetchall()
-    for row in data:
-        print(row)
-    """
+def insert_data(curseur, var1, var2, var3, var4 ):
+    global mid 
+    print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({mid}, {var1},{var2},{var3}, {var4});")
+    curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({mid}, {var1},{var2},{var3}, {var4});")
+   
+    # data = curseur.fetchall()
+    # for i in data:
+    #     rowid =i.id
+    #     rowid=max(rowid)
+    #     print(rowid)
+    
+    mid+=1
     print("data ajouté")
 
 def close_connection():

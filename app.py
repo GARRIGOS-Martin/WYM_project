@@ -1,6 +1,6 @@
 from flask import Flask        # import de l’objet Flask
 from flask import render_template, request
-import requests
+#import requests
 
 
 app = Flask(__name__) # instanciation application
@@ -9,17 +9,9 @@ app = Flask(__name__) # instanciation application
 def home():
     return render_template('/home.html')   # on renvoie une chaîne de caractères
 
-@app.route("/home")  # association d’une route (URL) avec la fonction suivante
-def return_home():
-    return render_template('/home.html')   # on renvoie une chaîne de caractères
-
 @app.route("/contact")  # association d’une route (URL) avec la fonction suivante
 def contact():
     return render_template('/contact.html')   # on renvoie une chaîne de caractères
-
-@app.route("/about")  # association d’une route (URL) avec la fonction suivante
-def about():
-    return render_template('/about.html')   # on renvoie une chaîne de caractères
 
 @app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante
 def thanks():
@@ -30,7 +22,10 @@ def summary():
     text = request.form.get("input_text")
     texte_resume = resume_texte_ibm(text)
     
-    return render_template('summary.html', texte_initial= text, texte_resume = texte_resume)   # on renvoie une chaîne de caractères
+def get_data():
+   if request.method == 'POST':
+      result = request.form
+      return render_template("result.html",result = result)
 
 
 def resume_texte_ibm(monText):

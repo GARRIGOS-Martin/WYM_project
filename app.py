@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template, request
 from DBserver import *
 import requests
+import json
 
 # Connexion à la Base de donnée et création de la table
 conn = get_connection()
@@ -45,10 +46,12 @@ def thanks():
 @app.route("/summary" , methods=["GET","POST"])  # association d’une route (URL) avec la fonction suivante
 def summary():
     text = request.form.get("input_text")
-    texte_resume = resume_texte_ibm(text)    
+    result = resume_texte_ibm(text) 
+    result_json = json.loads(result)   # Transforme en dictionnaire
+    result_text = result_json['summary_text'][0]
     return render_template('summary.html',
                             texte_initial= text,
-                            texte_resume = texte_resume)   # on renvoie une chaîne de caractères
+                            texte_resume = result_text)   # on renvoie une chaîne de caractères
 
 
 def resume_texte_ibm(monText):

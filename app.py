@@ -9,7 +9,7 @@ curr = conn.cursor()
 test_connection(conn)
 create_table(curr)
 
-
+# Recupere l'id
 
 # Lance l'application
 app = Flask(__name__) # instanciation application

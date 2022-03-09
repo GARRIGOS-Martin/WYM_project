@@ -39,6 +39,7 @@ def thanks():
     message = "'" + request.form.get("Message") + "'"
     print(prenom, nom, message, mail)
     insert_data(curr, 1, prenom, nom, mail, message)
+    
     return render_template('Thanks.html') 
 
 @app.route("/summary" , methods=["GET","POST"])  # association d’une route (URL) avec la fonction suivante

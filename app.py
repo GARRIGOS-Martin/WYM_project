@@ -5,15 +5,9 @@ import requests
 
 # Connexion  Base de donnée et création de la table
 conn = get_connection()
-
-test_connection()
-create_table()
-insert_data()
-
-
-
-
-
+curr = conn.cursor()
+test_connection(conn)
+create_table(curr)
 
 
 
@@ -36,9 +30,28 @@ def contact():
 def about():
     return render_template('/about.html')   # on renvoie une chaîne de caractères
 
-@app.route("/Thanks")  # association d’une route (URL) avec la fonction suivante
+@app.route("/Thanks", methods=["GET", "POST"])  # association d’une route (URL) avec la fonction suivante
 def thanks():
-    return render_template('Thanks.html')   # on renvoie une chaîne de caractères
+    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
+    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
+    print(request.form.get("Prenom"))
+    print(request.form, request.method, request)
+    for kv in request.form.values():
+        print(kv)
+    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
+    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
+    prenom = "'" + request.form.get("Prenom") + "'"
+    nom = "'" + request.form.get("Nom") + "'"
+    mail = "'" + request.form.get("Mail") + "'"
+    message = "'" + request.form.get("Message") + "'"
+    print(prenom, nom, message, mail)
+    insert_data(curr, 1, prenom, nom, mail, message)
+    return render_template('Thanks.html')  
+
+
+
+
+
 
 @app.route("/summary" , methods=["GET","POST"])  # association d’une route (URL) avec la fonction suivante
 def summary():

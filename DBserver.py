@@ -17,25 +17,27 @@ def get_connection():
             host="127.0.0.1",
             port=5432,
         )
-        conn.autocommit=True
+        #conn.autocommit=True
     except:
         return False
 
-def test_connection():
-    conn = get_connection()
-  
-    if conn:
+def test_connection(connecteur):
+    if connecteur:
         print("Connection to the PostgreSQL established successfully.")
     else:
         print("Connection to the PostgreSQL encountered and error.")
 
-def create_table():
-    curr.execute(" CREATE TABLE IF NOT EXISTS IDENTIFICATION (msg_id INT PRIMARY KEY NOT NULL, name VARCHAR(100), message VARCHAR(255), objet VARCHAR(255));")
-    print ("table crée")
+def create_table(curseur):
+    curseur.execute(""" CREATE TABLE IF NOT EXISTS IDENTIFICATION (id INT PRIMARY KEY NOT NULL, 
+                prenom VARCHAR(100), 
+                nom VARCHAR(100), 
+                mail VARCHAR(255),
+                message VARCHAR(255));""")
+    print ("table créée")
 
-def insert_data():
-    
-    curr.execute(" INSERT INTO IDENTIFICATION (msg_id, name,message,objet) VALUES (1,'AMINA','Bonjour', 'fff');")
+def insert_data(curseur, id, var1, var2, var3, var4 ):
+    print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({id}, {var1},{var2},{var3}, {var4});")
+    curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({id}, {var1},{var2},{var3}, {var4});")
     data = curr.fetchall()
     for row in data:
         print(row)

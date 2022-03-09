@@ -1,15 +1,16 @@
-from flask import Flask        # import de l’objet Flask
+from flask import Flask        
 from flask import render_template, request
 from DBserver import *
 import requests
 
-# Connexion  Base de donnée et création de la table
+# Connexion à la Base de donnée et création de la table
 conn = get_connection()
 curr = conn.cursor()
-test_connection(conn)
-create_table(curr)
+test_connection(conn)   # Teste la connection
+create_table(curr)      # Creation de la table
 
-# Recupere l'id
+# Recupere l'id max
+
 
 # Lance l'application
 app = Flask(__name__) # instanciation application
@@ -32,32 +33,18 @@ def about():
 
 @app.route("/Thanks", methods=["GET", "POST"])  # association d’une route (URL) avec la fonction suivante
 def thanks():
-    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
-    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
-    print(request.form.get("Prenom"))
-    print(request.form, request.method, request)
-    for kv in request.form.values():
-        print(kv)
-    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
-    print('"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
     prenom = "'" + request.form.get("Prenom") + "'"
     nom = "'" + request.form.get("Nom") + "'"
     mail = "'" + request.form.get("Mail") + "'"
     message = "'" + request.form.get("Message") + "'"
     print(prenom, nom, message, mail)
     insert_data(curr, 1, prenom, nom, mail, message)
-    return render_template('Thanks.html')  
-
-
-
-
-
+    return render_template('Thanks.html') 
 
 @app.route("/summary" , methods=["GET","POST"])  # association d’une route (URL) avec la fonction suivante
 def summary():
     text = request.form.get("input_text")
-    texte_resume = resume_texte_ibm(text)
-    
+    texte_resume = resume_texte_ibm(text)    
     return render_template('summary.html', texte_initial= text, texte_resume = texte_resume)   # on renvoie une chaîne de caractères
 
 

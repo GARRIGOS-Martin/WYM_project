@@ -10,14 +10,15 @@ import psycopg2
 
 def get_connection():
     try:
-        return psycopg2.connect(
+        conn = psycopg2.connect(
             database="postgres",
             user="wym_admin",
             password="admin",
             host="127.0.0.1",
             port=5432,
         )
-        #conn.autocommit=True
+        conn.autocommit=True
+        return conn
     except:
         return False
 
@@ -38,10 +39,11 @@ def create_table(curseur):
 def insert_data(curseur, id, var1, var2, var3, var4 ):
     print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({id}, {var1},{var2},{var3}, {var4});")
     curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({id}, {var1},{var2},{var3}, {var4});")
-    data = curr.fetchall()
+    """
+    data = curseur.fetchall()
     for row in data:
         print(row)
-    
+    """
     print("data ajouté")
 
 def close_connection():

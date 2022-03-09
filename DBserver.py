@@ -46,6 +46,6 @@ def insert_data(curseur, id, var1, var2, var3, var4 ):
     """
     print("data ajouté")
 
-def close_connection():
-    conn.close() 
+def close_connection(connection):
+    connection.close() 
 

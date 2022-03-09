@@ -1,8 +1,23 @@
 from flask import Flask        # import de l’objet Flask
 from flask import render_template, request
+from DBserver import *
 import requests
 
+# Connexion  Base de donnée et création de la table
+conn = get_connection()
 
+test_connection()
+create_table()
+insert_data()
+
+
+
+
+
+
+
+
+# Lance l'application
 app = Flask(__name__) # instanciation application
 
 @app.route("/")  # association d’une route (URL) avec la fonction suivante
@@ -48,5 +63,8 @@ def resume_texte_ibm(monText):
 
 
 app.run(debug = True, host='0.0.0.0', port=8888) # démarrage de l’appli
+
+
+close_connection()
 
 

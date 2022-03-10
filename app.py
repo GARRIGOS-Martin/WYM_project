@@ -62,7 +62,6 @@ def resume_texte_ibm(monText):
     data  = { "text": [monText]}
 
     r = requests.post(url, json=data)
-
     return r.text
 
 

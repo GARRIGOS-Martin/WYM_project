@@ -1,14 +1,17 @@
-#sudo docker run --name wym_db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=wym_admin -p 5432:5432 -d postgres 
-#poetry install psycopg2
-#poetry add psycopg2-binary
-#pip install psycopg2
+#To create a connection to the database server:
+ 
+# poetry add psycopg2-binary
+# ou
+# pip install psycopg2
 
-
-#the following code can be used to create a connection to the database server:
+# librairy
 import psycopg2
 import os
 
-mid=0
+# variable globale
+max_id=0
+
+# Connextion avec la BD
 def get_connection():
     host = os.getenv('DB_HOST') # Va recuperer les variales d'environnement du container du docker compose
     user = os.getenv('DB_USER')
@@ -40,25 +43,19 @@ def create_table(curseur):
                 nom VARCHAR(100), 
                 mail VARCHAR(255),
                 message VARCHAR(255));""")
-    global mid 
+    global max_id 
     curseur.execute ('SELECT MAX (id) FROM IDENTIFICATION ;')
     data = curseur.fetchall()
     print(len(data))
-    mid = ((data[0][0])or 0)+1
+    # Recherche l'id max 
+    max_id = ((data[0][0])or 0)+1  # 0 si data[0][0] est None (quand la table est vide))
     print ("table créée")
 
 def insert_data(curseur, var1, var2, var3, var4 ):
-    global mid 
+    global max_id 
     print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({mid}, {var1},{var2},{var3}, {var4});")
     curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({mid}, {var1},{var2},{var3}, {var4});")
-   
-    # data = curseur.fetchall()
-    # for i in data:
-    #     rowid =i.id
-    #     rowid=max(rowid)
-    #     print(rowid)
-    
-    mid+=1
+    max_id+=1
     print("data ajouté")
 
 def close_connection(connection):

@@ -16,6 +16,7 @@ services:
 
   app:
     image: flask-app
+    restart: always
     ports:
       # local:container
       - "8888:8888"

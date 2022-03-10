@@ -65,6 +65,10 @@ def resume_texte_ibm(monText):
 
     return r.text
 
+@app.route("/try_beau")  # association d’une route (URL) avec la fonction suivante
+def about():
+    return render_template('/try_beau.html')   # on renvoie une chaîne de caractères
+
 
 app.run(debug = True, host='0.0.0.0', port=8888) # démarrage de l’appli
 

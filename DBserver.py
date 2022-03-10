@@ -5,7 +5,7 @@
 
 
 #the following code can be used to create a connection to the database server:
-import psycopg2
+#import psycopg2
 import os
 
 mid=0

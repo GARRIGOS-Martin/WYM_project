@@ -10,9 +10,9 @@ services:
     # volumes:
     #   # Volume de la base de données
     #   - ./db-data:/var/lib/
-    #environment:
-     # - POSTGRES_USER=wym_admin
-      #- POSTGRES_PASSWORD=admin
+    environment:
+      - POSTGRES_USER=wym_admin
+      - POSTGRES_PASSWORD=admin
 
   app:
     image: flask-app

@@ -4,16 +4,21 @@ from DBserver import *
 import requests
 import json
 import os
+from time import sleep
+
 # Connexion à la Base de donnée et création de la table
-conn = get_connection()
-print (conn)
-curr = conn.cursor()
-test_connection(conn)   # Teste la connection
-create_table(curr)      # Creation de la table
 
-# Recupere l'id max
-
-
+conn=False
+while not conn:
+    conn = get_connection()
+    print (conn)
+    if conn:
+        curr = conn.cursor()
+        test_connection(conn)   # Teste la connection
+        create_table(curr)      # Creation de la table
+    else:
+        print('attente de connexion...')
+        sleep(2)
 
 # Lance l'application
 app = Flask(__name__) # instanciation application
@@ -64,9 +69,9 @@ def resume_texte_ibm(monText):
     r = requests.post(url, json=data)
     return r.text
 
-@app.route("/try_beau")  # association d’une route (URL) avec la fonction suivante
-def about():
-    return render_template('/try_beau.html')   # on renvoie une chaîne de caractères
+# @app.route("/try_beau")  # association d’une route (URL) avec la fonction suivante
+# def about():
+#     return render_template('/try_beau.html')   # on renvoie une chaîne de caractères
 
 
 app.run(debug = True, host='0.0.0.0', port=8888) # démarrage de l’appli

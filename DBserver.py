@@ -53,8 +53,8 @@ def create_table(curseur):
 
 def insert_data(curseur, var1, var2, var3, var4 ):
     global max_id 
-    print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({mid}, {var1},{var2},{var3}, {var4});")
-    curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({mid}, {var1},{var2},{var3}, {var4});")
+    print(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({max_id}, {var1},{var2},{var3}, {var4});")
+    curseur.execute(f" INSERT INTO IDENTIFICATION (id, prenom, nom, mail, message) VALUES ({max_id}, {var1},{var2},{var3}, {var4});")
     max_id+=1
     print("data ajouté")
 

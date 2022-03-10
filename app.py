@@ -3,7 +3,7 @@ from flask import render_template, request
 from DBserver import *
 import requests
 import json
-
+import os
 # Connexion à la Base de donnée et création de la table
 conn = get_connection()
 print (conn)
@@ -55,7 +55,8 @@ def summary():
 
 def resume_texte_ibm(monText):
     # Pour interagir avec la page html  
-    url = "http://localhost:5000/model/predict"
+    url = os.getenv('IBM_URL')
+    # url = "http://localhost:5000/model/predict"
 
     headers= {"Content-Type": "application/json; charset=utf-8", "accept":"application/json"}
     data  = { "text": [monText]}

@@ -6,16 +6,22 @@
 
 #the following code can be used to create a connection to the database server:
 import psycopg2
+import os
 
 mid=0
 def get_connection():
+    host = os.getenv('DB_HOST') # Va recuperer les variales d'environnement du container du docker compose
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_PASSWORD')
+    port = os.getenv('DB_PORT')
+    db = os.getenv('DB_NAME')
     try:
         conn = psycopg2.connect(
-            database="postgres",
-            user="wym_admin",
-            password="admin",
-            host="127.0.0.1",
-            port=5432,
+            database=db,
+            user=user,
+            password=password,
+            host=host,
+            port=port,
         )
         conn.autocommit=True
         return conn
@@ -38,7 +44,7 @@ def create_table(curseur):
     curseur.execute ('SELECT MAX (id) FROM IDENTIFICATION ;')
     data = curseur.fetchall()
     print(len(data))
-    mid = (data[0][0])+1
+    mid = ((data[0][0])or 0)+1
     print ("table créée")
 
 def insert_data(curseur, var1, var2, var3, var4 ):

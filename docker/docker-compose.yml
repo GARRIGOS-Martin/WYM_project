@@ -1,0 +1,45 @@
+version: '3'
+
+
+services:
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    # volumes:
+    #   # Volume de la base de données
+    #   - ./db-data:/var/lib/
+    environment:
+      - POSTGRES_USER=wym_admin
+      - POSTGRES_PASSWORD=admin
+
+  app:
+    image: flask-app
+    ports:
+      # local:container
+      - "8888:8888"
+    environment: 
+      - DB_HOST=db 
+      - DB_PORT=5432  
+      - DB_USER=wym_admin
+      - DB_PASSWORD=admin
+      - DB_NAME=wym_admin
+      - IBM_URL=http://summarizer:5000/model/predict
+    # volumes:
+    #   # Volume stockant les fichiers web du projet
+    #   - ./:/var/www/html
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    depends_on:
+      - db
+      - summarizer
+ 
+
+  summarizer:
+    image: quay.io/codait/max-text-summarizer
+    ports:
+      - "5000:5000"
+ 
+    
